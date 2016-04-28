@@ -1,0 +1,84 @@
+<div class="container">
+	{{include '../../public/breadcrumbs'}}
+
+	<div class="card">
+		<div class="card-header">
+			<h2>订单信息管理</h2>
+			<ul class="actions">
+				<li>
+					<a href="#om/info/init?tpl=om/info/save" class="btn-modal">
+						<i class="zmdi zmdi-plus"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="bootgrid-header container-fluid">
+			<form id="frmSearch" action="#om/info/list?tpl=om/info/index" role="form">
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="zmdi zmdi-search"></i></span>
+
+					<div class="fg-line">
+                      <select class="select-picker" name="type" data-value="{{query.type}}">
+                          <option value="">请选择</option>
+                          <option value="3">远程订单</option>
+                          <option value="4">在线订单</option>
+                          <option value="5">现场订单</option>
+                      </select>
+                	</div>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<button type="button" class="btn btn-primary btn-sm m-t-5 waves-effect btn-search">
+							{{lang.btn.search}}
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped table-hover table-ellipsis">
+				<thead>
+				<tr>
+					<th width="5%">#</th>
+					<th width="10%">订单类型</th>
+					<th width="10%">下单人</th>
+					<th width="25%">问题</th>
+					<th width="10%">顾问</th>
+					<th width="5%">状态</th>
+					<th width="10%">支付交易号</th>
+					<th width="5%">订单流程</th>
+					<th width="*">操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				{{each list}}
+				<tr>
+					<td>{{$index+1}}</td>
+					<td title="{{$value.typeName}}">{{$value.typeName}}</td>
+					<td title="{{$value.placeName}}">{{$value.placeName}}</td>
+					<td title="{{$value.problemName}}">{{$value.problemName}}</td>
+					<td title="{{$value.advisorName}}">{{$value.advisorName}}</td>
+					<td title="">{{if $value.status==1 }}可用{{else}}不可用{{/if}}</td>
+					<td title="{{$value.paynumber}}">{{$value.paynumber }}</td>
+					<td title="{{$value.orderStep}}">
+						{{$value.orderStep}}
+					</td>
+					<td>
+						<button type="button" class="btn btn-xs btn-default btn-icon btn-modal waves-effect waves-circle waves-float waves-effect waves-circle waves-float"
+								 data-href="om/info/get/{{$value.id}}?tpl=om/info/edit">
+							<span class="zmdi zmdi-edit"></span> </button>
+						<button type="button" class="btn btn-xs btn-danger btn-icon btn-del"
+								data-url="om/info/del/{{$value.id}}">
+							<span class="zmdi zmdi-delete"></span> </button>
+					</td>
+				</tr>
+				{{/each}}
+				</tbody>
+			</table>
+		</div>
+		{{#pageInfo | pagination:lang,'full'}}
+	</div>
+</div>

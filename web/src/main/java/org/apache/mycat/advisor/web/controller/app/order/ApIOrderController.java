@@ -16,41 +16,41 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/app/order")
-public class ApiOrderController extends BaseController{
+public class ApIOrderController extends BaseController{
 
 
-	ApiOrderService apiOrderService;
+    ApiOrderService apiOrderService;
 
 
-	@RequestMapping("index")
-	public ResultMap index() {
-		return success();
-	}
+    @RequestMapping("index")
+    public ResultMap index() {
+        return success();
+    }
 
-	/**
-	 * 下单
-	 * @param order
-	 * @param param
-	 * @return
-	 */
-	@RequestMapping("enterprise/advisor/subscribe")
-	public ResultMap subscribe(@RequestParam Map<String, Object> param) {
+    /**
+     * 下单
+     * @param order
+     * @param param
+     * @return
+     */
+    @RequestMapping("enterprise/advisor/subscribe")
+    public ResultMap subscribe(@RequestParam Map<String, Object> param) {
 
-		boolean flag = apiOrderService.newOrder(param,1L);
-		if (flag) {
-			return success();
-		}
-		return failure();
-	}
+        boolean flag = apiOrderService.newOrder(param,1L);
+        if (flag) {
+            return success();
+        }
+        return failure();
+    }
 
-	/**
-	 * 订单确认
-	 * @param order
-	 * @param param
-	 * @return
-	 */
-	@RequestMapping("affirm")
-	public ResultMap affirm(TabOrder order,@RequestParam Map<String, Object> param) {
-		return success();
-	}
+    /**
+     * 订单确认
+     * @param order
+     * @param param
+     * @return
+     */
+    @RequestMapping("affirm")
+    public ResultMap affirm(TabOrder order,@RequestParam Map<String, Object> param) {
+        return success();
+    }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.apache.mycat.advisor.persistence.dao.SysAuthoritiesMapper">
+
+    <select id="findSysAuthoritiesByUsername" resultType="org.apache.mycat.advisor.persistence.model.SysAuthorities">
+<![CDATA[
+      SELECT
+	*
+FROM
+	SYS_AUTHORITIES
+WHERE
+	AUTHORITY_ID IN (
+		SELECT DISTINCT
+			AUTHORITY_ID
+		FROM
+			SYS_ROLES_AUTHORITIES S1
+		JOIN sys_users_roles ur ON S1.ROLE_ID = ur.tab_id
+		JOIN Tab_user_info inf ON inf.id = ur.tab_id
+		AND inf.username = #{username}
+	)
+    ]]>
+    </select>
+
+	<select id="findListByName" resultType="map">
+		<![CDATA[
+		SELECT
+			auth.*,
+			modul.MODULE_NAME
+		FROM
+			SYS_AUTHORITIES auth
+		LEFT JOIN sys_modules modul ON modul.MODULE_ID = auth.MODULE_ID
+		WHERE
+			auth.AUTHORITY_MARK LIKE #{name} or auth.AUTHORITY_NAME LIKE #{name}
+
+    ]]>
+	</select>
+	<select id="findResIdsByAuthId" resultType="Long">
+	<![CDATA[
+		SELECT RESOURCE_ID from sys_authorities_resources where AUTHORITY_ID = #{id}
+    ]]>
+	</select>
+
+</mapper>
